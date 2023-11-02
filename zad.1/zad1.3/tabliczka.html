@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    th {
+        color: white;
+        background-color: blue;
+    }
+
+    .zero {
+        background-color: white;
+    }
+
+    .gora {
+        background-color: blue;
+    }
+
+    td,
+    tr {
+        background-color: yellow;
+    }
+
+    .pierw {
+        background-color: white;
+    }
+</style>
+
+<body>
+    <table>
+
+        <script>
+            let numer = prompt("numer") // pobieram na ile liczb chce tabelke
+            let tds = "<tr><td class=zero></td>" // ustawiam poczatkowy string, klasa zero, bo specjalny przypadek na ten kwadracik miedzy 1 i 1
+            for (let i = 1; i <= numer; i++) {
+
+                tds = tds + '<th class=gora>' + i + '</th>' // oznaczam cala gore klasa gora, zeby mogla byc na niebiesko bez problemu
+            }
+            tds = tds + "</tr></th><tr><th>" // zamykam pierwszy rzad, nie wiem jak inaczej to zrobic zeby bylo tak jak na obrazku, 
+            // ale to sprawia ze tabelka dziala z KAZDA liczba
+            for (let tri = 1; tri <= numer; tri++) {
+                tds = tds + tri // to doslownie tylko dopisuje numerek do pionowych headerow, to tyle
+                for (let trii = 1; trii <= numer; trii++) {
+                    if (Number.isInteger(Math.sqrt(tri * trii)) == true && tri == trii) { // ok. tu jest duzo do ogarniecia
+                        // ogolnie, zeby zrobic fajna sciezke jak na obrazku, to musi byc potega n^2, tutaj, sprawdzam to po prostu
+                        // uzywajac funkcji .isInteger, a potem robie pierwiastek z tri*trii. Tylko n^2 zwroci mi integer
+                        // reszta zwroci mi floaty. Ale potem musze sprawdzic czy tri jest rowne trii, bo sa przypadki, gdzie
+                        // np tri = 1, trii = 9 no i to tez jest n^2 technicznie (9 = 3*3), i mam smieszne puzzle przez to.
+                        // sprawdzenie czy trii == tri, upewnia mnie ze w pewnym sensie, koordynaty x oraz y są takie same.
+
+
+                        tds = tds + '<td class=pierw>' + trii * tri + ' ' + '</td>' // jesli to jest pierwiastek, daje klase pierw
+                    } else {
+                        tds = tds + '<td>' + trii * tri + ' ' + '</td>' // jesli nie, to pisze to samo ale nie przydzielam klasy
+                    }
+                }
+                tds = tds + '</th></tr><tr><th>' // tutaj po prostu zakanczam rząd i zaczynam kolejny
+
+            }
+            let arr = tds.split("") // update o 4:30, tak sobie z tym poradzę:
+            // po prostu konwertuje tds w array, usuwam 3 ostatnie elementy, 3 to wystarczajaco zeby ostatni <tr> mial w sobie nic.
+            // potem to zmieniam w string, i usuwam przecinki pozostale z bycia tabela.
+            // console.log(arr.length)
+            // console.log(arr.length - 8)
+            for (let y = arr.length - 3; y < arr.length; y++) {
+                arr.pop()
+            }
+            tds = arr.toString()
+            // tdsi = tds.replace(/\b0\b/g, ''); ogolnie to byl regex w wczesniejszej wersji, ktory mi kasowal m.in
+            // 0 w kacie miedzy 1 i 1, oraz rząd zer na górze, w obecnym rozwiązaniu nie jest potrzebny
+            // zrozumienie regex: \b to word boundary, daje mi taką granicę, że np w słowie moon:
+            // \bm/ mi zaznaczy m, /oo\b/ mi nie zaznaczy oo, no bo po oo jest n
+            // /oon\b/ mi zaznaczy oon, no bo potem nic nie ma
+            // mozna wyobrazic sobie to jako sciany, za ktorymi ma nie byc absolutnie nic.
+            tds = tds.replace(/,/g, '')
+            document.write(tds)
+        </script>
+
+    </table>
+</body>
+
+</html>

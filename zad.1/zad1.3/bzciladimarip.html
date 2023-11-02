@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        document.write("<pre>")
+        let numer = prompt("Podaj ilość cyfr do piramidki")
+        for (y = 1; y <= numer; y++) {
+            for (j = numer - y; j >= 1; j--) {
+                document.write(" ")
+            }
+            for (z = y; z > 0; z--) {
+                document.write(z)
+            }
+            document.write("<br>")
+        }
+        document.write("</pre>")
+    </script>
+</body>
+
+</html>

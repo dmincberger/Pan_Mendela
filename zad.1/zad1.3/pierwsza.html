@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let bool = Boolean
+        let numer = prompt("Podaj liczbę do sprawdzenia: ")
+        if (numer == 0) {
+            alert("liczba " + numer + " jest wyjątkowym przypadkiem")
+        } else if (numer == 1) {
+            alert("liczba nie jest pierwsza, liczba pierwsza musi mieć DOKŁADNIE 2 dzielniki, 1 ma tylko 1")
+        }
+        else {
+            for (let i = 2; i < numer; i++) {
+                if (numer % i == 0) {
+                    bool = false
+                }
+            }
+            if (bool) {
+                alert("Liczba jest pierwsza")
+            }
+            else {
+                alert("Liczba nie jest pierwsza")
+            }
+        }
+    </script>
+</body>
+
+</html>

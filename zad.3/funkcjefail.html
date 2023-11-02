@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre><textarea rows="30" cols="25" maxlength="5">
+        <pre></pre>
+    </textarea></pre>
+    <script>
+        setInterval(function () {
+            let index = 0
+            tabelka = new Array()
+            literki = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM"
+            tekstarea = document.getElementsByTagName("textarea")[0]
+            tekstarea.innerHTML = ""
+            rowy = tekstarea.rows
+            coly = tekstarea.cols
+            let list = []
+            for (let i = 0; i < rowy - 1; i++) {
+                for (let y = 0; y < coly; y++) {
+                    randomowy = Math.floor(Math.random() * coly * 4)
+                    if (randomowy > 10 && randomowy <= 15) {
+                        litera = literki[Math.floor(Math.random() * literki.length)]
+                        tekstarea.innerHTML = tekstarea.innerHTML + litera + " "
+                    } else {
+                        tekstarea.innerHTML = tekstarea.innerHTML + " "
+                    }
+                }
+                tekstarea.innerHTML = tekstarea.innerHTML + "\n"
+            }
+            tekst = tekstarea.innerHTML.split("")
+            // indexed = tekst.findIndex("\n")
+            // console.log(indexed)
+            // console.log(tekst)
+            // console.log(tekst)
+            // flaga = false
+            // console.log(tekst)
+            alttekst = tekst
+            tekst.join('')
+            console.log(alttekst)
+            tekst = tekst.toString()
+            tekst = tekst.replace(/[","]/gm, '')
+            tekstarea.innerHTML = tekst
+            for (let i = 0; i < 29; i++) {
+                list = []
+                for (let y = 0; y < 50; y++) {
+                    list[y] = alttekst.shift()
+                    console.log(list[y])
+                    if (list[y] == "\n") {
+                        y = 51
+                        // console.log("KURWAA")
+                    }
+                }
+                tabelka[i] = list
+            }
+            console.log(tabelka)
+            tabelka.join('')
+            tabelka = tabelka.toString()
+            tabelka = tabelka.replace(/[',']/gm, '')
+            tekstarea.innerHTML = tabelka
+        }, 1000)
+    </script>
+</body>
+
+</html>

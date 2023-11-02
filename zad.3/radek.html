@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<img src="Unknown.png">
+
+<body>
+    <script>
+        let img = document.getElementById("img")
+        let a = 0;
+        let R = 100;
+        let p = Math.PI / 180
+        let ruchx = 200
+        let ruchy = 200
+        let kierx = -1
+        let kiery = -1
+        function ruch() {
+            x = (Math.cos(a * p) * R) * -1
+            y = (Math.sin(a * p) * R) * -1
+            x = x + ruchx
+            y = y + ruchy
+            console.log(x)
+            console.log(y)
+            img.style.top = y + "px";
+            img.style.left = x + "px";
+            if (a < 360) {
+                a += 1
+            }
+            else {
+                a = 0
+            }
+        }
+        setInterval("ruch()", 1)
+    </script>
+</body>
+
+</html>

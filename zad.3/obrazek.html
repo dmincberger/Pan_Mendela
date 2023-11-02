@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <img src="./Unknown.png" width="200">
+    <script>
+        let w = document.getElementsByTagName("img")[0]
+        let flaga = true
+        console.log(w)
+        setInterval(function () {
+            if (w.width < 1000 && flaga == true) {
+                w.width = w.width + 3
+            } else {
+                flaga = false
+            }
+            if (w.width > 200 && flaga == false) {
+                w.width = w.width - 3
+            } else {
+                flaga = true
+            }
+
+        }, 1)
+    </script>
+</body>
+
+</html>

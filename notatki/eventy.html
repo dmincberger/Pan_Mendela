@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function log(str) {
+            console.log(str);
+        }
+
+        function init() {
+            let el = document.getElementById("divek");
+            console.log(el);
+            el.onclick = function () {
+                console.log("ok", this)
+            }
+            el.onclick = (e) => { // ta technika nadpisuje poprzednie zdarzenie danego typu
+                console.log("OK", this, e, e.target);
+            }
+
+            // Listener
+            el = document.getElementById("divek2");
+            el.addEventListener("click", function (e) {
+                console.log("oo:", this, e, e.target);
+            }, false)
+            let f = (e) => {
+                console.log("xx:", this, e, e.target);
+                el.removeEventListener("click", f);
+            }
+            el.addEventListener("click", f, false); // ta technika dopisuje kolejne funkcje do zdarzenioa danego typu
+
+            // event bubbling / capturing
+            const outer = document.getElementById("outer");
+            const inner = document.getElementById("inner");
+            outer.addEventListener("click", () => console.log('Outer'), false)
+            inner.addEventListener("click", (e) => {
+                console.log('Inner');
+                e.stopPropagation();
+            }, false)
+
+        }
+    </script>
+</head>
+
+<body onload="init();">
+    <button id="el1" onclick="console.log('ok');log('haha')" onmouseover="log('over me!')">A</button>
+    <button onclick="console.log('B',this);this.innerText='lol'">B</button>
+    <button onclick="console.log('C',this);this.innerText='lol'">C</button>
+    <button onclick="console.log('D',this,event,event.target);this.innerText='lol'">D</button>
+    <div id="divek">Click me!</div>
+    <div id="divek2">Click me 2!</div>
+    <div id="outer">Outer
+        <div id="inner">Inner</div>
+    </div>
+    <script>
+
+    </script>
+</body>
+
+</html>

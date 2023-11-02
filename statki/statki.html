@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #main {
+        width: 700px;
+        height: 700px;
+        display: flex;
+    }
+
+    .pole {
+        width: 50px;
+        height: 50px;
+        border: 1px solid black;
+        position: absolute;
+    }
+</style>
+
+<body>
+    <div id="main">
+
+    </div>
+</body>
+<script>
+    let plansza = document.getElementById("main")
+    let fragment = document.createDocumentFragment()
+
+    function plansza_gen() {
+        let id = 1
+        for (let row = 1; row < 11; row++) {
+            for (let col = 1; col < 11; col++) {
+                let pole = document.createElement("div")
+                pole.classList.add("pole")
+                pole.setAttribute(`style`, `left:${col * 50}px; top:${row * 50}px; id=${id}`)
+                id = id + 1
+                fragment.appendChild(pole)
+            }
+        }
+        plansza.appendChild(fragment)
+    }
+
+    function tabela_pol() {
+        let tabela_shipow = []
+        for (let row = 0; row < 12; row++) {
+            tabela_shipow[row] = []
+            for (let col = 0; col < 12; col++) {
+                if (row == 0) {
+                    tabela_shipow[row].push("X")
+                }
+                else if (row == 11) {
+                    tabela_shipow[row].push("X")
+                }
+                else if (col == 0) {
+                    tabela_shipow[row].push("X")
+                } else if (col == 11) {
+                    tabela_shipow[row].push("X")
+                } else {
+                    tabela_shipow[row].push(0)
+                }
+            }
+        }
+        return tabela_shipow
+    }
+
+    function statki_komputer() {
+        let tabela_shipow_komputer = tabela_pol()
+        let statki = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1]
+        for (let index = 0; index < statki.length; index++) {
+            let pion = Math.floor(Math.random() * 1.5)
+            let row = Math.floor(Math.random() * 10)
+            let col = Math.floor(Math.random() * 10)
+            if (tabela_shipow_komputer[row][col] == 0 && tabela_shipow_komputer[row + 1][col] != 1 && tabela_shipow_komputer[row - 1][col] != 1 && tabela_shipow_komputer[row][col + 1] != 1 && tabela_shipow_komputer[row][col - 1] != 1) {
+                if (pion) {
+                    for (i = 0; i < statki[index] - 1; i++) {
+                        if (tabela_shipow_komputer[row + i][col] == 0 && tabela_shipow_komputer[row - i][col] == 0 && tabela_shipow_komputer[row][col + 1] == 0 && tabela_shipow_komputer[row][col - 1] == 0) {
+
+                        }
+
+                    }
+                }
+            }
+        }
+        return tabela_shipow_komputer
+    }
+    function rysowanie_divow() {
+        let statki_komputerow = statki_komputer()
+        let id = 0
+        for (let row = 1; row < 11; row++) {
+            for (let col = 1; col < 11; col++) {
+                let pole = document.getElementsByClassName("pole")[id]
+                console.log(pole)
+                id += 1
+
+                if (statki_komputerow[row][col] == 1) {
+                    pole.style.backgroundColor = "black"
+                }
+            }
+        }
+    }
+    let statki_komputerow = statki_komputer()
+    console.log(statki_komputerow)
+    let tabela_shipow = tabela_pol()
+    plansza_gen()
+    statki_komputer()
+    rysowanie_divow()   
+</script>
+
+</html>

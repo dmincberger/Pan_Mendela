@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        waga = [1, 3, 7, 9, 1, 3, 7, 9, 1, 3] // suma kontrolna jest sprawdzana mnozac kazda liczbe, po kolei przez kazda wage po kolei.
+        let pesel = prompt("Podaj pesel do sprawdzenia: ")
+        let suma_k = 0 // suma kontrolna
+        miesiac = parseInt(pesel[3]) + (pesel[2] * 10) - 1 // to mi sprawdza stulecie urodzenia, a po % 20 sprawdza mi tez miesiac urodzenia
+        let miesiace = ["Styczen", "Luty", "Marzec", "Kwiecien", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień"]
+        for (i in waga) {
+            suma_k = suma_k + (pesel[i] * waga[i]) // obliczanie sumy kontrolnej
+        }
+        suma_k = 10 - (suma_k % 10) // jesli jest ok, to 10 - suma_k % 10 powinno zwrocic ostatnia cyfre peselu
+        if (pesel.length == 11 && pesel[10] == suma_k) { // pesel ma miec 11 cyfr i dobra suma kontrolna
+            if (pesel[9] % 2 == 0) {
+                document.write("Jesteś kobietą <br>") // parzystosc oznacza kobiete nie parzystosc mezczyzne
+            } else {
+                document.write("Jesteś mężczyzną <br>")
+            }
+            if (miesiac >= 1 && miesiac <= 12) { // wszystko tutaj odwoluje sie do tabelki jak jest opisywany pesel, ale stulecia sa opisywane biorac miesiac, oraz od 19XX 01, wzwyż co stulecie + 20 a konczy to 18XX
+                // czemu tego nie zrobilem switchem? Nie wiem, nie chce mi sie zmieniac.
+                document.write("Rok urodzenia: 19" + pesel[0] + pesel[1] + " Miesiąca: " + [miesiace[miesiac % 20]] + " Dnia: " + pesel[4] + pesel[5])
+            }
+            if (miesiac >= 21 && miesiac <= 32) {
+                document.write("Rok urodzenia: 20" + pesel[0] + pesel[1] + " Miesiąca: " + [miesiace[miesiac % 20]] + " Dnia: " + pesel[4] + pesel[5])
+            }
+            if (miesiac >= 41 && miesiac <= 52) {
+                document.write("Rok urodzenia: 21" + pesel[0] + pesel[1] + " Miesiąca: " + [miesiace[miesiac % 20]] + " Dnia: " + pesel[4] + pesel[5])
+            }
+            if (miesiac >= 61 && miesiac <= 72) {
+                document.write("Rok urodzenia: 22" + pesel[0] + pesel[1] + " Miesiąca: " + [miesiace[miesiac % 20]] + " Dnia: " + pesel[4] + pesel[5])
+            }
+            if (miesiac >= 81 && miesiac <= 92) {
+                document.write("Rok urodzenia: 18" + pesel[0] + pesel[1] + " Miesiąca: " + [miesiace[miesiac % 20]] + " Dnia: " + pesel[4] + pesel[5])
+            }
+        } else {
+            document.write("Proszę  podać poprawny pesel")
+        }
+    </script>
+</body>
+
+</html>

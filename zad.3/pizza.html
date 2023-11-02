@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <style>
+        img {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+    <img src="./Unknown.png">
+    <script>
+        image = document.getElementsByTagName("img")[0]
+        // image.style.top = (parseInt(image.style.top) + 400)+"px" - dodaje do obecnej wartosci top wartosc ktora chce zwiekszyc, przesuwa od góry!
+        image.style.top = "400px"
+        image.style.left = "400px"
+        // image.style.left = (parseInt(image.style.top) + 400) + "px" - to samo, ale przesuwa od lewej!
+        //pomysł - ruszam się po kole, dochodze do momentu w ktorym jestem na top = top punktu startowego, oraz left = left + srednica kola, stamtad robie nowe kolo i ide do tego samego miejsca
+
+        const R = 5; // promien kola
+        let kat = 0; // kąt, uzywam go do obliczenia cos i sin, ktore mowia gdzie co o ile ma sie przesunac
+        let kroky = -1  // kroky kontroluje czy rysuje kolo od dolu czy od gory
+        let krokx = -1 // krokx kontroluje czy rysuje kolo w lewo czy w prawo
+        let xs = parseInt(image.style.left) // obecna pozycja X obrazka (o polowe podzielic zeby bylo w polowie pobrazka?)
+        let ys = parseInt(image.style.top) // obecna pozycja Y obrazka (o polowe podzielic zeby bylo w polowie obrazka?)
+        let ifkat = 0 // warunkowy kat w pewnym sensie, pozwala mi nie zaczynac rysowac kola od poczatku, ale zmienic trase jego rysunku
+
+
+        // 1 if, jezeli ustawie kat na 1.5, to zaczne rysowac kolo od jego 1/4 czesci (wszystko to ciezko wytlumaczyc bez rysunku)
+        // 2 if, teraz potrzebuje rysowac kolo w druga strone, ale od poczatku
+        // 3 if, teraz tak samo jak wczesniej, to samo kolo jest ok ale musze je od 1/4 czesci rysowac
+        // 4 if, po prostu wracam do warunkow poczatkowych, tutaj nie ma wytlumaczenia, warunki poczatkowe w sumie uzyskalem probami i bledami
+
+        // czemu warunek jest czasem kat == ifkat a czasem ifkat < kat
+        // kat == ifkat, jezeli zresetuje oba katy, to wtedy ZAWSZE beda sobie rowne, bo uzywaja tej samej formulki do ich obliczen
+        // ifkat < kat, jezeli resetuje ifkat, a kat ustawiam od 1.5, to kat ZAWSZE bedzie wiekszy of ifkata
+        // sam warunek porownujacy kata i ifkata jest po to, zeby rozroznic przypadki gdzie krokx, kroky jest taki sam, i ifkat rowniez jest taki sam w warunku
+        // czemu ifkat? czasami potrzebuje jakby w srodku rysowania kola, zmienic jego trase ale nie zaczynac od nowa.
+
+        setInterval(() => {
+            if (ifkat > 3 && kat == ifkat && kroky == -1 && krokx == -1) {
+                ifkat = 0
+                kat = 1.5
+            }
+            if (ifkat > 3 && ifkat < kat && kroky == -1 && krokx == -1) {
+                ifkat = 0
+                kat = 0
+                kroky = 1
+                krokx = 1
+            }
+            if (ifkat > 3 && kat == ifkat && kroky == 1 && krokx == 1) {
+                ifkat = 0
+                kat = 1.5
+            }
+            if (ifkat > 3 && ifkat < kat && kroky == 1 && krokx == 1) {
+                krokx = -1
+                kroky = -1
+                ifkat = 0
+                kat = 0
+            }
+            image.style.top = ys + "px" // zmieniam pozycje X
+            image.style.left = xs + "px" // zmieniam pozycje Y
+
+
+            xs += (Math.cos(kat) * R) * krokx // obliczam o ile obrazek powinien przesunac sie w osi X
+            ys += (Math.sin(kat) * R) * kroky // obliczam o ile obrazek powinien przesunac sie w osi Y
+
+
+            kat += 2 * (Math.PI / 180) // obliczam nowy kat, ktory pozwoli mi przesunac obrazek o odpowiednia ilosc
+            ifkat += 2 * (Math.PI / 180) // obliczam wartosc katu warunkowego
+            // czemu taki wzor? wiem ze stopnie na rad = stopnie * (pi/180),
+            // wiem ze kolo w radach = 2pi, czyli 6,28 radow
+        }, 10)
+    </script>
+</body>
+
+</html>

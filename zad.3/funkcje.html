@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <style>
+        textarea {
+            overflow: hidden;
+        }
+    </style>
+    <pre><textarea rows="30" cols="50" ></textarea></pre>
+    <script>
+        let literki = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM"
+        let tekstarea = document.getElementsByTagName("textarea")[0]
+        let rowy = tekstarea.rows
+        let coly = tekstarea.cols
+        let tabelka = new Array()
+        let pseudotabelka = ""
+        let list = []
+        let index = -1
+        let litera = ""
+        let funkcja = setInterval(function () {
+            console.log("fEWF")
+        }, 19000)
+        let puste = [""]
+        setInterval(function () {
+            clearInterval(funkcja)
+            funkcja = setInterval(function () {
+                if (index < rowy - 1) {
+                    index = index + 1
+                    list = []
+                    for (let y = 0; y < coly - 5; y++) {
+                        randomowy = Math.floor(Math.random() * 25 * 4)
+                        if (randomowy > 10 && randomowy <= 15) {
+                            litera = literki[Math.floor(Math.random() * literki.length)]
+                            list.push(litera)
+                        } else {
+                            list.push("")
+                        }
+                    }
+                    list.push("\n")
+                    tabelka.unshift(list)
+                    pseudotabelka = tabelka.toString()
+                    pseudotabelka = pseudotabelka.replace(/[","]/gm, '&nbsp')
+                    tekstarea.innerHTML = pseudotabelka
+                    dlugosc = tabelka.length
+                } if (index >= rowy - 1) {
+                    tabelka.unshift("\n")
+                    tabelka.pop()
+                    pseudotabelka = tabelka.toString()
+                    pseudotabelka = pseudotabelka.replace(/[","]/gm, '&nbsp')
+                    tekstarea.innerHTML = pseudotabelka
+                }
+            }, 200)
+            list = []
+            tabelka = []
+            pseudotabelka = []
+            tekstarea.innerHTML = ""
+            index = -1
+            litera = ""
+        }, 11700)
+    </script>
+</body>
+
+</html>

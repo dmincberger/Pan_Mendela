@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="divek" class="spanik"></div>
+    <span class="spanik">A</span>
+    <span class="spanik">B</span>
+    <span class="spanik">C</span>
+    <span class="spanik" style="width:50px;">D</span>
+    <form name="formularz">
+        <input name="inpucik" data-pala="siadaj jeden">
+    </form>
+    <img src="" usemap="#nazwa" />
+    <img src="" />
+    <a href="">link</a>
+    <map name="nazwa">
+        <area shape="circle" coords="10,10,5" href="#" />
+    </map>
+    <script>
+        // DOM
+        let el = document.querySelector("span.spanik"); // selektor css
+        console.log(el)
+        el = document.querySelectorAll("span.spanik");
+        console.log(el, el[0])
+        el[1].innerHTML = "<b>Jazda!</b>"
+        el[2].innerText = "<b>Jazda!</b>"
+        console.log(el[2].className);
+        el[2].className = "MegaKlasa"
+        el[2].id = "MegaId";
+        console.log(el[3].style.width); // 50px
+        el[2].style.color = "red";
+        el[2].style["background-color"] = "pink"
+        el[1].style.backgroundColor = "blue" // z-index -> zIndex
+
+
+        console.log(document.getElementById("divek"))
+        console.log(document.getElementsByClassName("spanik"))
+        el = document.getElementsByTagName("input")
+        console.log(el)
+        el[0].value = "niezła jazda!!!!"
+        console.log(el[0].getAttribute("data-pala")); // future!!!
+        console.log(document.forms)
+        console.log(document.images)
+        console.log(document.links);
+
+        //uwaga
+        console.log(formularz, formularz.inpucik, divek); // mozna
+        // czy divek jest z DOM a moze stala a moze co innego - niejednoznaczność
+        // moesz ale nie polecam!!!
+
+
+
+        /*
+        // Funkcje
+        //console.log(suma(10, 10));  // ReferenceError: can't access lexical declaration 'suma' before initialization
+        let suma = function (a, b) {
+            console.log(arguments, arguments[0], arguments[3]);
+            return a + b; // moe coś zrwócić funkcja ale nie mus
+        }
+        console.log(suma(20, 10));
+        ///
+ 
+        nazwa();
+ 
+        function nazwa() {
+            console.log("hoisting"); // moze być uzyte przed "deklaracją"
+        }
+        ///
+ 
+        let log = (str) => {
+            console.log(str)
+        }
+        log("Ale jazda!!!!");
+ 
+        // zasięg zmiennych
+        let x = 20;
+        test();
+        console.log("Outer X:", x); // Outer X: 20
+        //console.log("Outer Y:", y); // Uncaught ReferenceError: y is not defined
+        //console.log("Outer Z:", z); // Uncaught ReferenceError: z is not defined
+        console.log("Outer Lol:", lol); // Outer Lol: 80
+ 
+        function test() {
+            let y = 40;
+            var z = 60;
+            lol = 80; // to jest globalne!!!!!
+            console.log("inner X: ", x); // inner X:  20
+            console.log("inner Y: ", y); // inner Y:  40
+            console.log("inner Z: ", z); // inner Z:  60
+            console.log("inner Lol: ", lol); // inner Lol:  80
+        }
+        */
+
+
+        // "cykliczność"
+        let puk = function () {
+            console.log("puk")
+        }
+
+        setTimeout(puk, 2000); // czas w ms     po określonym czasie
+        let h = setInterval("puk()", 1000)
+
+        setTimeout(() => {
+            clearInterval(h);    //clearTimout
+        }, 4000)
+    </script>
+</body>
+
+</html>

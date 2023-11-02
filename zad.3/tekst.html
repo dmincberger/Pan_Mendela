@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" tworze tekst z duza iloscia pustych miejsc i potem tekst
+        value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ciekawe czy uda ci się to zrobić">
+    <script>
+        let text = document.getElementsByTagName("input")[0]
+        let tabelka = new Array()   //placeholder (nie musi byc string, powinnien byc new array())
+        let pushed = ""  //placeholder na wartosc do pushu
+        setInterval(() => {
+            tabelka = text.value.split("")  //zamieniam tekst na tabelke
+            pushed = tabelka.shift()  //usuwam pierwsza wartosc z tabelki i ja przechowuje
+            tabelka.push(pushed)  //dodaje ta usunieta wartosc na sam koniec
+            jtabelka = tabelka.join()  //jtabelka (joined.tabelka) to tabelka ale string po modyfikacjach moich
+            rjtabelka = jtabelka.replace(/[","]/gm, '')  //rj to jtabelka ale usuwam przecinki
+            text.value = rjtabelka  //ustawiam value tekstu w inpucie na tabelke, z 1 znakiem na koncu i usunietymi przecinkami jako string.
+        }, 50);
+    </script>
+</body>
+
+</html>

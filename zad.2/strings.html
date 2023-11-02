@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .zolty {
+        background-color: yellow;
+    }
+</style>
+
+<body>
+    <script>
+        let dna = prompt("Podaj swoją sekwencję DNA")
+        let BNA = dna.toUpperCase()
+        const DNA = BNA.replace(/[\r\n]/gm, ''); // regex, []oznacza jakiś zestaw znaków, \r oraz \n to endline dla apple oraz windows
+        // document.write(DNA)                   // /gm oznacza all instances i multiple lines, czyli efektywnie usuwam newliny.
+        let dlugosc = DNA.length // potrzebne do iteracji w celu zlaczenia ich w tryplety
+        let tablica = DNA.split("") // nie jestem pewien czemu dokladnie to dziala, ale zakladam ze split rozdziela kazdy char poprzez ""
+        tabelka = new Array() // na pozniej wazne! taki template w celu pozniejszego przerzucenia nici komplementarnej, tutaj robimy replace
+        tryplet = new Array() // tabelka z trypletami
+        kolorki = ["blue", "brown", "green", "grey", "orange", "pink", "purple", "red", "turquoise", "yellow"] // tabela kolorow do kolorowania tekstu
+        let dkol = kolorki.length
+        let rkol = "" // placeholder na losowy kolor
+        unikatowe = new Array() // potrzebne do zliczenia elementów
+        mapunikatowe = {} // slownik przechowujace tryplet + jego ilosc wystepowania, uzyje potem do zrobienia obiektu keys + values
+        let unikat = 0 // potrzebne, do stworzenia tabelki z unikatowymi elementami trypletu, potrzebnyh do zliczenia wystepowania kazdego trio
+        let zliczenie = 0 // ta wartosc, mi pokaze ile razy cos wystepuje w tabelce tryplet
+        alt = new Array() // tabelka z komplementarna nicia (w przyszlosci)
+
+        document.write(DNA.toLowerCase())
+        document.write("<br>")
+
+        for (let i = 0; i < dlugosc; i++) {
+            let j = i + 1
+            if (j % 3 == 0) {
+                let test = tablica[i - 2] + tablica[i - 1] + tablica[i] // skanuje cala tabelke po kolei, zmienna j jest dla wygody
+                tryplet.push(test)                                      // zebym mogl robic proste modulo co 3, co 3 indexy, lacze obecny
+            }                                                           // oraz 2 poprzednie w jeden string, ktory daje w jeden index trypletu
+        }
+        tabelka = tablica // wczesniejszy placeholder narazie staje sie oryginalna tabelka z podzialem na literki same.
+        let n_dlugosc = dlugosc / 3 // nie wiem czemu zrobilem to tak jak moglem zrobic len(tryplet) ale niech bedzie?
+        for (let y = 0; y < n_dlugosc; y++) {
+            let b = y + 1
+            if (tryplet[y] == "ATG") {
+                document.write(tryplet[y].fontcolor("green").bold() + ",")
+                continue       // to samo, tylko co 3 daje kolor zielony i bold
+            }                                                              // Notka na przyszłość: bold sprawia że literki zajmują więcej miejsca
+            else if (b % 5 == 0) {                                         // i przez to górna nić jest dłuższa, nie dlatego bo mam błąd...
+                let randomowy = Math.floor(Math.random() * (dkol))
+                let rkol = kolorki[randomowy]
+                document.write(tryplet[y].fontcolor(rkol) + ",")
+                continue
+            }
+            else if (tryplet[y] == "TGA" || tryplet[y] == "TAA" || tryplet[y] == "TAG") {
+                zmien = tryplet[y]
+                document.write("<span class='zolty'>" + zmien + ",</span>")
+                continue
+            }
+            else {
+                document.write(tryplet[y] + ",")
+                continue
+            }
+        }
+
+        document.write("<br>" + "<br>")
+        for (let i = 0; i < dlugosc; i++) {
+            let j = i + 1
+            switch (tabelka[i]) {
+                case ("A"): // biore TABELKE, sprawdzam kazda litere, robie SWITCH, poniewaz switch bierze wartosc, i skacze do tego co ma zrobic
+                    tabelka[i] = tabelka[i].replace("A", "T") // a if dalej leci po warunkach, robie tak dla 3 indeksow, po czym lacze je.
+                    // console.log(tabelka[i]) po wszystkim, powstaje nic komplementarna!
+                    break;
+                case ("T"):
+                    tabelka[i] = tabelka[i].replace("T", "A")
+                    // console.log(tabelka[i])
+                    break;
+                case ("G"):
+                    tabelka[i] = tabelka[i].replace("G", "C")
+                    // console.log(tabelka[i])
+                    break;
+                case ("C"):
+                    tabelka[i] = tabelka[i].replace("C", "G")
+                    // console.log(tabelka[i])
+                    break;
+            }
+            if (j % 3 == 0) {
+                let altstring = tabelka[i - 2] + tabelka[i - 1] + tabelka[i]
+                alt.push(altstring)
+            }
+        }
+        document.write(alt + "<br>")
+        document.write(alt.join().replace(/[',']/gm, "").toLowerCase())
+        // document.write(alt)
+        document.write("<br>")
+        document.write("<br>")
+        for (let i = 0; i < tryplet.length; i++) {
+            unikat = true // suma kontrolna, czy wartosc sie powtarza
+            for (let y = 0; y < unikatowe.length; y++) {
+                if (tryplet[i] == unikatowe[y]) // sprawdzam cala tabelke z unikatami ktore juz sa, zeby upewnic sie ze wartosc jest dodana pierwszy raz
+                    unikat = false // jesli if sie sprawdza, to unikat nie jest unikatowy i go nie dodaje
+            }
+            if (unikat == true) {
+                unikatowe.push(tryplet[i])
+            }
+        }
+        for (let y = 0; y < unikatowe.length; y++) { // to samo co wczesniej, ale po prostu zliczam kazda instancje, po czym
+            zliczenie = 0                            // dopisuje dana instancje na koniec w dokument z liczba jego wystapien.
+            for (let i = 0; i < tryplet.length; i++) {
+                if (tryplet[i] == unikatowe[y]) {
+                    zliczenie = zliczenie + 1
+                }
+            }
+            mapunikatowe[unikatowe[y]] = zliczenie
+        }
+        klucze = Object.keys(mapunikatowe) // tabelka z nazwami kluczy mapunikatowe pokolei
+        wartosci = Object.values(mapunikatowe) // tabelka z wartosciami mapunikatowe pokolei
+        // console.log(klucze[1]) // nazwa klucza[1], w tym przypadku TTG, mapunikatowe[1] klucz to tez TTG
+        // delete mapunikatowe[klucze[1]] // usuwa klucz i wartosc z mapunikatowe gdzie klucz = 'klcuze[1]'
+        // console.log(wartosci[1]) // zwraca wartosc 1 klucza dict mapunikatowe
+        // console.log(mapunikatowe[klucze[1]]) zwraca wartosc klucza o nazwie klucze[1] z dict mapunikatowe
+        // console.log(mapunikatowe[klucze[1]]) zwraca wartosc w dict mapunikatowego ktorego nazwa klucza = klucze[1]
+        DictList = new Array()
+        for (let i = 0; i < wartosci.length; i++) {
+            DictList.push({ key: klucze[i], value: wartosci[i] }) // pushuje do tabeli, w jedną komórkę (rozumiem jako słownik)
+            // słownik z key (key: to może być cokolwiek, może być nawet)
+            // jazda!!!:), ktory ma jakas wartosc.
+        }
+        DictList.sort((a, b) => { return b.value - a.value })  // sort bierze 2 wartosci, wysyla je do funkcji porownywawczej.
+        // jezeli wartosc jest ujemna, a jest sortowane przed b
+        // jezeli wartosc jest dodatnia, b jest sortowane przed a
+        //jezeli wartosc jest 0, zadne zmiany nie sa wprowadzane.
+        for (i = 0; i < wartosci.length; i++) {
+            if (i % 5 == 0) {
+                randomowy = Math.floor(Math.random() * (dkol))
+            }
+            rkol = kolorki[randomowy]
+            document.write('<span style=background-color:' + rkol + ";>" + DictList[i].key + "-" + DictList[i].value + "</span><br>")
+        }
+    </script>
+</body>
+
+</html>
